@@ -62,6 +62,24 @@ The example above can be seen live as <https://python-deployment-mhssg6mqx.now.s
 
 Also, the source code of the deployment can be checked by appending `/_src` e.g. <https://python-deployment-mhssg6mqx.now.sh/_src>.
 
+## Web Server Gateway Interface
+
+The Web Server Gateway Interface (WSGI) is a calling convention for web servers to forward requests to web applications written in the Python. You can use WSGI with frameworks such as [Flask](https://zeit.co/examples/python-flask) or Django.
+
+Instead of defining a `handler`, define an `app`.
+
+```python
+from flask import Flask, Response
+app = Flask(__name__)
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return Response("<h1>Hello from Flask on Now<h1><p>Path: %s</p>" % (path))
+```
+
+Most frameworks use their own implementation of routing but you can use a catch-all route and configure [Now Routes](https://zeit.co/docs/v2/deployments/routes) to each lambda.
+
 ## Technical Details
 
 ### Entrypoint
