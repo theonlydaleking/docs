@@ -64,9 +64,11 @@ Also, the source code of the deployment can be checked by appending `/_src` e.
 
 ## Web Server Gateway Interface
 
-The Web Server Gateway Interface (WSGI) is a calling convention for web servers to forward requests to web applications written in the Python. You can use WSGI with frameworks such as [Flask](https://zeit.co/examples/python-flask) or Django.
+The Web Server Gateway Interface (WSGI) is a calling convention for web servers to forward requests to web applications written in the Python. You can use WSGI with frameworks such as [Flask](/examples/python-flask) or Django.
 
-Instead of defining a `handler`, define an `app`.
+Instead of defining a `handler`, define an `app` variable in your Python file.
+
+For example, define a `index.py` file inside a folder as follows:
 
 ```python
 from flask import Flask, Response
@@ -75,10 +77,28 @@ app = Flask(__name__)
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
-    return Response("<h1>Hello from Flask on Now<h1><p>Path: %s</p>" % (path))
+    return Response("<h1>Flask on Now</h1><p>You visited: /%s</p>" % (path), mimetype="text/html")
 ```
 
-Most frameworks use their own implementation of routing but you can use a catch-all route and configure [Now Routes](https://zeit.co/docs/v2/deployments/routes) to each lambda.
+Inside `requirements.txt` define:
+
+```
+flask==1.0.3
+```
+
+And define a `now.json` like:
+
+```json
+{
+  "version": 2,
+  "builds": [{ "src": "index.py", "use": "@now/python" }],
+  "routes": [{ "src": "(.*)", "dest": "index.py" }]
+}
+```
+
+Most frameworks use their own implementation of routing but you can use a catch-all route to circumvent the framework and instead use [Now Routing Layer](/docs/v2/deployments/routes) to match a route to a Lambda.
+
+The example above can be seen live as <https://python-flask-298quau1w.now.sh>
 
 ## Technical Details
 
