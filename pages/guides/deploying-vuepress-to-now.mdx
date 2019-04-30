@@ -11,7 +11,7 @@ export const meta = {
   authors: ['unicodeveloper'],
   url: '/guides/deploying-vuepress-to-now',
   editUrl: 'pages/guides/deploying-vuepress-to-now.mdx',
-  lastEdited: '2019-02-26T13:27:30.000Z'
+  lastEdited: '2019-04-30T19:38:35.000Z'
 }
 
 VuePress is a vue-powered static generator. It is used for generating static sites with a focus on writing.
@@ -66,7 +66,7 @@ module.exports = {
   A <InlineCode>config.js</InlineCode> configuration file.
 </Caption>
 
-Next, add some VuePress scripts to the `package.json` file in the root project directory.
+Next, add some scripts to the `package.json` file in the root project directory.
 
 ```js
 {
@@ -74,17 +74,18 @@ Next, add some VuePress scripts to the `package.json` file in the root project d
     "scripts": {
       "dev": "vuepress dev",
       "build": "vuepress build",
+      "now-dev": "vuepress dev docs --port=$PORT"
     }
 }
 ```
 
 <Caption>
-  A <InlineCode>package.json</InlineCode> file.
+  Adding scripts to a <InlineCode>package.json</InlineCode> file.
 </Caption>
 
-Now, you can run VuePress with the following command:
+Now, you can run VuePress by [replicating the Now environment locally](/docs/v2/development/basics/) with a single command:
 
-<TerminalInput>yarn dev</TerminalInput>
+<TerminalInput>now dev</TerminalInput>
 
 ## Step 3: Deploy VuePress with Now
 
